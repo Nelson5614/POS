@@ -61,57 +61,24 @@
         </thead>
 
         <tbody class="mt-6">
-            <tr class="border-b border-100 py-10">
-                <td>Eggs</td>
-                <td class="px-5 py-6">BVC12</td>
-                <td class="px-5 py-6">Perishable</td>
-                <td class="px-5 py-6">100</td>
-                <td class="px-5 py-6">M80.00</td>
-                <td class="px-5 py-6 w-28 text-green-700 text-center rounded-full ">Valid</td>
+            <tr v-for="product in products" :key="product.id" class="border-b border-100 py-10">
+                <td class="px-5 py-6">{{ product.Name }}</td>
+                <td class="px-5 py-6">{{ product.code }}</td>
+                <td class="px-5 py-6">{{ product.catergory }}</td>
+                <td class="px-5 py-6">{{ product.quantity }}</td>
+                <td class="px-5 py-6">M{{ product.price }}00</td>
+                <td class="px-5 py-6">{{ product.status }}</td>
             </tr>
-            <tr class="border-b border-100 py-10">
-                <td>Eggs</td>
-                <td class="px-5 py-6">BVC12</td>
-                <td class="px-5 py-6">Perishable</td>
-                <td class="px-5 py-6">100</td>
-                <td class="px-5 py-6">M80.00</td>
-                <td class="px-5 py-6 w-28 text-green-700 text-center rounded-full ">Valid</td>
-            </tr>
-            <tr class="border-b border-100 py-10">
-                <td>Eggs</td>
-                <td class="px-5 py-6">BVC12</td>
-                <td class="px-5 py-6">Perishable</td>
-                <td class="px-5 py-6">100</td>
-                <td class="px-5 py-6">M80.00</td>
-                <td class="px-5 py-6 w-28 text-green-700 text-center rounded-full ">Valid</td>
-            </tr>
-            <tr class="border-b border-100 py-10">
-                <td>Eggs</td>
-                <td class="px-5 py-6">BVC12</td>
-                <td class="px-5 py-6">Perishable</td>
-                <td class="px-5 py-6">100</td>
-                <td class="px-5 py-6">M80.00</td>
-                <td class="px-5 py-6 w-28 text-green-700 text-center rounded-full ">Valid</td>
-            </tr>
-            <tr class="border-b border-100 py-10">
-                <td>Eggs</td>
-                <td class="px-5 py-6">BVC12</td>
-                <td class="px-5 py-6">Perishable</td>
-                <td class="px-5 py-6">100</td>
-                <td class="px-5 py-6">M80.00</td>
-                <td class="px-5 py-6 w-28 text-green-700 text-center rounded-full ">Valid</td>
-            </tr>
+
         </tbody>
     </table>
  </div>
 </template>
 
-<script>
-export default {
+<script setup>
 
-}
+const props = defineProps({
+    products: Array
+})
 </script>
 
-<style>
-
-</style>

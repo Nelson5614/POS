@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inventry;
 use Illuminate\Http\Request;
 
 class InventryController extends Controller
@@ -13,7 +14,9 @@ class InventryController extends Controller
      */
     public function index()
     {
-        return inertia('Inventry/index');
+        return inertia('Inventry/index',[
+            'products' => Inventry::all()
+        ]);
     }
 
     /**
@@ -23,7 +26,7 @@ class InventryController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Inventry/create');
     }
 
     /**
@@ -34,7 +37,20 @@ class InventryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($data);
+        $request->validate([
+            'name' => 'required|string|min:2|max:50',
+            'code' => 'required|string|min:2|max:50',
+            'price' => 'required|integer',
+            'quantity' => 'required|integer',
+            'expiring_date' => 'required|string|min:2|max:50',
+            'catergory' => 'required|string|min:2|max:50'
+        ]);
+
+        Inventry::create($request->all());
+
+        return redirect()->route('inventry.index')->with('message', 'Product added successfuly');
+
     }
 
     /**
@@ -54,9 +70,12 @@ class InventryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Inventry $product)
     {
-        //
+
+        return inertia('Inventry/edit',[
+            'product' => $product
+        ]);
     }
 
     /**
@@ -66,9 +85,20 @@ class InventryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Inventry $product)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|min:2|max:50',
+            'code' => 'required|string|min:2|max:50',
+            'price' => 'required|integer',
+            'quantity' => 'required|integer',
+            'expiring_date' => 'required|string|min:2|max:50',
+            'catergory' => 'required|string|min:2|max:50'
+        ]);
+
+        $product -> update($request->all());
+
+        return redirect()->route('inventry.index')->with('message', 'updated successfully');
     }
 
     /**

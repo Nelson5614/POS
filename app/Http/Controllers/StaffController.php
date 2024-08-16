@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class StaffController extends Controller
@@ -13,7 +14,9 @@ class StaffController extends Controller
      */
     public function index()
     {
-        return inertia('Staff/index');
+        return inertia('Staff/index',[
+            'employees' => Staff::all(),
+        ]);
     }
 
     /**
@@ -23,7 +26,7 @@ class StaffController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Staff/create');
     }
 
     /**
@@ -32,9 +35,21 @@ class StaffController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Staff $data)
     {
-        //
+        //dd($data);
+        $request->validate([
+            'name' => 'string|required|min:2|max:255',
+            'email' =>'email|required|unique:staff',
+            'phone' => 'integer|required|min:8',
+            'address' => 'string|required|min:5',
+            'department' => 'string|required|min:5',
+            'position' => 'string|required|min:5'
+        ]);
+
+       Staff::create($request->all());
+
+        return redirect()->route('staff.index')->with('message', 'New staff added successfuly');
     }
 
     /**
@@ -54,9 +69,11 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit( Staff $employee)
     {
-        //
+        return inertia('Staff/edit',[
+            'employee' => $employee
+        ]);
     }
 
     /**
@@ -66,9 +83,20 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Staff $employee )
     {
-        //
+        $request->validate([
+            'name' => 'string|required|min:2|max:255',
+            'email' =>'email|required|unique:staff',
+            'phone' => 'integer|required|min:8',
+            'address' => 'string|required|min:5',
+            'department' => 'string|required|min:5',
+            'position' => 'string|required|min:5'
+        ]);
+
+        $employee -> update($request->all());
+
+        return redirect()->route('staff.index')->with('message', 'record updated succesfully');
     }
 
     /**
@@ -77,8 +105,10 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Staff $employee)
     {
-        //
+        $employee -> delete();
+
+        return redirect()->route('staff.index')->with('message', 'Recorded delete successfullys');
     }
 }

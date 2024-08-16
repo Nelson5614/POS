@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('staff', function (Blueprint $table) {
+        Schema::create('inventries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('address');
-            $table->string('department');
-            $table->string('position');
+            $table->string('Name');
+            $table->string('code')->unique();
+            $table->string('expiring_date')->nullable();
+            $table->string('catergory');
+            $table->integer('quantity');
+            $table->integer('price');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('staff');
+        Schema::dropIfExists('inventries');
     }
 };

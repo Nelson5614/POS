@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Staff;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class StaffFactory extends Factory
 {
+    protected $model = Staff::class;
     /**
      * Define the model's default state.
      *
@@ -17,7 +19,12 @@ class StaffFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'phone' => $this->faker->phoneNumber,
+            'address' => $this->faker->address,
+            'department' => $this->faker->randomElement(['IT', 'Marketing', 'HR', 'Finance']),
+            'position' => $this->faker->jobTitle,
         ];
     }
 }
